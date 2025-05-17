@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Patient - MediCare</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">MediCare</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="patient-list.html">Patient List</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="form-section">
+    <h2>Patient Registration</h2>
+    <form id="patientForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">--Select--</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="issue">Health Issue:</label>
+      <input type="text" id="issue" name="issue" required />
+
+      <label for="contact">Contact Number:</label>
+      <input type="tel" id="contact" name="contact" required />
+
+      <button type="submit">Register</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MediCare. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('patientForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const patient = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        issue: document.getElementById('issue').value,
+        contact: document.getElementById('contact').value
+      };
+
+      const patients = JSON.parse(localStorage.getItem('patients')) || [];
+      patients.push(patient);
+      localStorage.setItem('patients', JSON.stringify(patients));
+
+      alert("Patient registered successfully!");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

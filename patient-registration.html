@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Registration | MediCare</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background-color: #f4f7fa;
+      color: #333;
+    }
+
+    header {
+      background-color: #0077b6;
+      padding: 1rem 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 1rem;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .nav-links li a.active,
+    .nav-links li a:hover {
+      background-color: #023e8a;
+    }
+
+    .registration-section {
+      max-width: 600px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .registration-section h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #0077b6;
+    }
+
+    .registration-form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    .registration-form input,
+    .registration-form select,
+    .registration-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .registration-form button {
+      margin-top: 1.5rem;
+      width: 100%;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .registration-form button:hover {
+      background-color: #023e8a;
+    }
+
+    .message {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #0077b6;
+      color: white;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <div class="logo">MediCare</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="patient-registration.html" class="active">Register</a></li>
+        <li><a href="icu-availability.html">ICU Check</a></li>
+        <li><a href="doctor-blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="registration-section">
+    <h1>Patient Registration</h1>
+    <p style="text-align: center;">Please fill in the form below to register your details.</p>
+    
+    <form id="registration-form" class="registration-form">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" min="0" max="120" placeholder="Your age" required />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="contact">Contact Number (optional):</label>
+      <input type="tel" id="contact" name="contact" placeholder="10-digit number" pattern="[0-9]{10}" />
+
+      <label for="problem">Health Problem / Symptoms:</label>
+      <textarea id="problem" name="problem" placeholder="Describe the health issue" rows="4" required></textarea>
+
+      <button type="submit">Submit Registration</button>
+      <p class="message" id="response-msg"></p>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MediCare. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('registration-form');
+    const msg = document.getElementById('response-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      msg.textContent = "Submitting...";
+      msg.style.color = "#555";
+
+      const name = form.name.value.trim();
+      const age = form.age.value.trim();
+      const gender = form.gender.value;
+      const contact = form.contact.value.trim();
+      const problem = form.problem.value.trim();
+
+      if (contact && !/^[0-9]{10}$/.test(contact)) {
+        msg.textContent = "Invalid contact number. Must be 10 digits.";
+        msg.style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:3000/patient-registration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, age, gender, contact, problem }),
+        });
+
+        const data = await res.json();
+        msg.textContent = data.message;
+        msg.style.color = res.ok ? "green" : "red";
+
+        if (res.ok) {
+          form.reset();
+        }
+      } catch (err) {
+        msg.textContent = "Submission failed. Try again later.";
+        msg.style.color = "red";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

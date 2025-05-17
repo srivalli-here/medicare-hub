@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ICU Update - MediCare</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">MediCare Admin</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="icu-update.html">Update ICU</a></li>
+        <li><a href="icu-availability.html">ICU Status</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="icu-form-section">
+    <h2>Update ICU Bed Availability</h2>
+    <form class="icu-form">
+      <label for="hospital">Hospital Name:</label>
+      <input type="text" id="hospital" name="hospital" required />
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required />
+
+      <label for="totalBeds">Total ICU Beds:</label>
+      <input type="number" id="totalBeds" name="totalBeds" required min="0" />
+
+      <label for="occupiedBeds">Occupied ICU Beds:</label>
+      <input type="number" id="occupiedBeds" name="occupiedBeds" required min="0" />
+
+      <button type="submit">Submit Update</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MediCare Admin Panel. All rights reserved.</p>
+  </footer>
+</body>
+</html>

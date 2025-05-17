@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient List - MediCare</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">MediCare Admin</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="patient-list.html">Patient List</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="patient-section">
+    <h2>Registered Patients</h2>
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Patient Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Issue</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody id="patientTableBody"></tbody>
+
+    </table>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MediCare Admin Panel. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const tableBody = document.getElementById('patientTableBody');
+    const patients = JSON.parse(localStorage.getItem('patients')) || [];
+
+    if (patients.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="6">No patient records found.</td></tr>';
+    } else {
+      patients.forEach((p, index) => {
+        const row = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${p.name}</td>
+            <td>${p.age}</td>
+            <td>${p.gender}</td>
+            <td>${p.issue}</td>
+            <td>${p.contact}</td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ICU Availability - MediCare</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f9fafa;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0a5275;
+      padding: 1rem 2rem;
+      color: white;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links li a:hover {
+      color: #e0f7fa;
+    }
+
+    .icu-section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .icu-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #0a5275;
+      margin-bottom: 2rem;
+    }
+
+    .icu-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .icu-table thead {
+      background-color: #0a5275;
+      color: white;
+    }
+
+    .icu-table th, .icu-table td {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .icu-table tbody tr:nth-child(odd) {
+      background-color: #f1f5f8;
+    }
+
+    .icu-table tbody tr:hover {
+      background-color: #e0f7fa;
+    }
+
+    .status {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .status.available {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status.full {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #0a5275;
+      color: white;
+      margin-top: 3rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .icu-table th, .icu-table td {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">MediCare</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="patient-registration.html">Register</a></li>
+        <li><a href="icu-availability.html">ICU Check</a></li>
+        <li><a href="doctor-blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="icu-section">
+    <h2>ICU Availability Status</h2>
+    <table class="icu-table">
+      <thead>
+        <tr>
+          <th>Hospital Name</th>
+          <th>Location</th>
+          <th>ICU Beds</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Apollo Hospitals</td>
+          <td>Guntur</td>
+          <td>3 / 10</td>
+          <td><span class="status available">Available</span></td>
+        </tr>
+        <tr>
+          <td>Ramesh Hospitals</td>
+          <td>Vijayawada</td>
+          <td>0 / 5</td>
+          <td><span class="status full">Full</span></td>
+        </tr>
+        <tr>
+          <td>Care Hospitals</td>
+          <td>Hyderabad</td>
+          <td>8 / 12</td>
+          <td><span class="status available">Available</span></td>
+        </tr>
+        <tr>
+          <td>Global Hospitals</td>
+          <td>Chennai</td>
+          <td>0 / 7</td>
+          <td><span class="status full">Full</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MediCare. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const rows = document.querySelectorAll('.icu-table tbody tr');
+      rows.forEach(row => {
+        const bedsText = row.cells[2].textContent.trim();
+        const availableBeds = parseInt(bedsText.split('/')[0].trim());
+
+        if (availableBeds < 3 && availableBeds > 0) {
+          row.style.backgroundColor = '#fff3cd'; // Light yellow
+          row.style.fontWeight = '600';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
